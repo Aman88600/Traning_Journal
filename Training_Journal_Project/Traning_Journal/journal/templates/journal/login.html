@@ -9,9 +9,13 @@
 
 <body>
     <h1>Log In</h1>
-    {% for i in details %}
-    <h1>{{ i.password }}</h1>
-    {% endfor %}
+
+    <form action="{% url 'journal:login' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="user_name" placeholder="Name">
+        <input type="password" name="user_password" placeholder="Password">
+        <input type="submit">
+    </form>
 </body>
 
 </html>

@@ -6,16 +6,21 @@ def index(request):
     return render(request, "journal/index.html")
 
 def login(request):
-    f = student.objects.all()
-    print(type(f))
-    f = list(f)
-    return render(request, "journal/login.html", {"details" : f})
+    if request.method == "POST":
+        user_name = request.POST.get("user_name")
+        user_password = request.POST.get("user_password")
+        f = student.objects.all()
+        f = list(f)
+        for i in f:
+            if (str(user_name) == str(i.name)) and (str(user_password) == str(i.password)):
+                print(f"Name = {i.name} Password = {i.password}")
+    return render(request, "journal/login.html")
 
 def signup(request):
     if request.method == "POST":
         user_name = request.POST.get("user_name")
         user_password = request.POST.get("user_password")
-        f = student(name = user_name, passowrd = user_password)
+        f = student(name = user_name, password = user_password)
         f.save()
         return render(request, "journal/login.html")
     return render(request, "journal/signup.html")

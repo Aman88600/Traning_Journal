@@ -9,6 +9,12 @@
 
 <body>
     <h1>Sign Up</h1>
+    <form action="{% url 'journal:index' %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="user_name">
+        <input type="password" name="user_password">
+        <input type="submit">
+    </form>
 </body>
 
 </html>

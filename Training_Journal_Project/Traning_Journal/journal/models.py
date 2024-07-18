@@ -4,3 +4,6 @@ from django.db import models
 class student(models.Model):
     name = models.CharField(max_length = 64)
     passowrd = models.CharField(max_length = 64)
+
+    def __str__(self):
+        return f"{self.name} {self.passowrd}"

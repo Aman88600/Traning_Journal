@@ -6,7 +6,10 @@ def index(request):
     return render(request, "journal/index.html")
 
 def login(request):
-    return render(request, "journal/login.html")
+    f = student.objects.all()
+    print(type(f))
+    f = list(f)
+    return render(request, "journal/login.html", {"details" : f})
 
 def signup(request):
     if request.method == "POST":

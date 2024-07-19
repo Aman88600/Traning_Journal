@@ -12,12 +12,16 @@ def login(request):
         f = student.objects.all()
         f = list(f)
         user_exists = 0
+        current_user_name = ""
+        current_user_password = ""
         for i in f:
             if (str(user_name) == str(i.name)) and (str(user_password) == str(i.password)):
                 user_exists = 1
+                current_user_name = str(i.name)
+                current_user_password = str(i.password)
         if user_exists == 1:
-            m = "User Exists"
-            return render(request, "journal/login.html", {"message" : m})
+            # m = "User Exists"
+            return render(request, "journal/dashboard.html", {"name" : current_user_name})
         else:
             m = "User Doesn't Exist"
             return render(request, "journal/login.html", {"message" : m})

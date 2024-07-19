@@ -11,9 +11,16 @@ def login(request):
         user_password = request.POST.get("user_password")
         f = student.objects.all()
         f = list(f)
+        user_exists = 0
         for i in f:
             if (str(user_name) == str(i.name)) and (str(user_password) == str(i.password)):
-                print(f"Name = {i.name} Password = {i.password}")
+                user_exists = 1
+        if user_exists == 1:
+            m = "User Exists"
+            return render(request, "journal/login.html", {"message" : m})
+        else:
+            m = "User Doesn't Exist"
+            return render(request, "journal/login.html", {"message" : m})
     return render(request, "journal/login.html")
 
 def signup(request):

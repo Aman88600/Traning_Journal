@@ -9,7 +9,7 @@
 
 <body>
     <h1>Log In</h1>
-
+    <h1>{{ message }}</h1>
     <form action="{% url 'journal:login' %}" method="post">
         {% csrf_token %}
         <input type="text" name="user_name" placeholder="Name">

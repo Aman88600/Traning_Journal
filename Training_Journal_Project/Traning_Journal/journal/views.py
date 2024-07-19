@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import student
+from django.urls import reverse
 # Create your views here.
 def index(request):
     return render(request, "journal/index.html")
@@ -20,8 +21,8 @@ def login(request):
                 current_user_name = str(i.name)
                 current_user_password = str(i.password)
         if user_exists == 1:
-            # m = "User Exists"
-            return render(request, "journal/dashboard.html", {"name" : current_user_name})
+            url = reverse("journal:dashboard", kwargs={"user_name" : current_user_name})
+            return redirect(url)
         else:
             m = "User Doesn't Exist"
             return render(request, "journal/login.html", {"message" : m})
@@ -35,3 +36,6 @@ def signup(request):
         f.save()
         return render(request, "journal/login.html")
     return render(request, "journal/signup.html")
+
+def dashboard(request, user_name):
+    return render(request, "journal/dashboard.html", {"name" : user_name})

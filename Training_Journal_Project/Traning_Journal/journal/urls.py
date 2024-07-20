@@ -5,4 +5,4 @@ app_name = "journal"
 urlpatterns = [path("", views.index, name="index"),
                 path("login", views.login, name = "login"),
                 path("signup", views.signup, name = "signup"),
-                path("<str:user_name>", views.dashboard, name="dashboard")]
+                path('<str:user_name>/', views.dashboard, name='dashboard'),]

@@ -9,9 +9,12 @@
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 
-<body>
-    <a href="{% url 'journal:login' %}">Login</a>
-    <a href="{% url 'journal:signup'  %}">SignUp</a>
+<body class="d-flex justify-content-center align-items-center vh-100">
+    <div class="text-center">
+        <a href="{% url 'journal:login' %}" class="btn btn-primary m-2">Login</a>
+        <br>
+        <a href="{% url 'journal:signup' %}" class="btn btn-danger">Sign Up</a>
+    </div>
 </body>
 
 </html>

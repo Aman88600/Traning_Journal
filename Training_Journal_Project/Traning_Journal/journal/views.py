@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import student
+from .models import student, exercise
 from django.urls import reverse
 # Create your views here.
 def index(request):
@@ -38,4 +38,21 @@ def signup(request):
     return render(request, "journal/signup.html")
 
 def dashboard(request, user_name):
-    return render(request, "journal/dashboard.html", {"name" : user_name})
+    if request.method == "POST":
+        # Saving exercise in database
+        f = exercise(user_name = user_name, exercise_name = request.POST.get("exercise"), sets = request.POST.get("sets"), reps = request.POST.get("reps"))
+        f.save()
+        exercises = exercise.objects.all()
+        exercises = list(exercises)
+        new_list = []
+        for i in exercises:
+            if str(i.user_name) == str(user_name):
+                new_list.append(i) 
+        return render(request, "journal/dashboard.html", {"name" : user_name, "message" : new_list})
+    exercises = exercise.objects.all()
+    exercises = list(exercises)
+    new_list = []
+    for i in exercises:
+        if str(i.user_name) == str(user_name):
+            new_list.append(i) 
+    return render(request, "journal/dashboard.html", {"name" : user_name, "message" : new_list})

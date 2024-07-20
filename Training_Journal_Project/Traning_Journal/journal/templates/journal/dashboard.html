@@ -18,8 +18,14 @@
                 {% for i in message %}
                 <div class="card mb-3">
                     <div class="card-body">
-                        <h5 class="card-title">Exercise: {{i.exercise_name}}</h5>
+                        <h5 class="card-title">{{i.exercise_name}}</h5>
                         <p class="card-text">Sets: {{ i.sets }} | Reps: {{ i.reps }}</p>
+                        <form action="{% url 'journal:delete_exercise' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_name" value="{{ name }}">
+                            <input type="hidden" name="exercise" value="{{ i.exercise_name }}">
+                            <button type="submit" class="btn btn-warning w-100">Delete</button>
+                        </form>
                     </div>
                 </div>
                 {% endfor %}

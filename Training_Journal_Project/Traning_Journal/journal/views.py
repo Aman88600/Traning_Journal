@@ -56,3 +56,18 @@ def dashboard(request, user_name):
         if str(i.user_name) == str(user_name):
             new_list.append(i) 
     return render(request, "journal/dashboard.html", {"name" : user_name, "message" : new_list})
+
+def delete_exercise(request):
+    if request.method == "POST":
+        user_name_1 = request.POST.get("user_name")
+        exercise_name_1 = request.POST.get("exercise")
+        exercises_to_delete = exercise.objects.get(user_name = user_name_1, exercise_name = exercise_name_1)
+        exercises_to_delete.delete()
+
+        exercises = exercise.objects.all()
+        exercises = list(exercises)
+        new_list = []
+        for i in exercises:
+            if str(i.user_name) == str(user_name_1):
+                new_list.append(i) 
+        return render(request, "journal/dashboard.html", {"name" : user_name_1, "message" : new_list})

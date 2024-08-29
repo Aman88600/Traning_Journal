@@ -92,7 +92,7 @@
             <input type="text" name="user_name" placeholder="Name" required>
             <input type="password" name="user_password" placeholder="Password" required>
             <div class="button-group">
-                <a href="" class="btn btn-secondary">Back</a>
+                <a href="{% url 'journal:index' %}"  class="btn btn-secondary">Back</a>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </form>

@@ -29,7 +29,7 @@
                     </div>
                 </div>
                 {% endfor %}
-                <form action="{% url 'journal:dashboard' user_name=name %}" method="post" class="needs-validation"
+                <form action="{% url 'journal:dashboard'%}" method="post" class="needs-validation"
                     novalidate>
                     {% csrf_token %}
                     <div class="mb-3">

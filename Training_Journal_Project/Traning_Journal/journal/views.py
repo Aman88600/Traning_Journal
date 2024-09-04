@@ -21,7 +21,8 @@ def login(request):
                 current_user_name = str(i.name)
                 current_user_password = str(i.password)
         if user_exists == 1:
-            url = reverse("journal:dashboard", kwargs={"user_name" : current_user_name})
+            request.session['user_name'] = current_user_name
+            url = reverse("journal:dashboard")
             return redirect(url)
         else:
             m = "User Doesn't Exist"
@@ -37,30 +38,35 @@ def signup(request):
         return render(request, "journal/login.html")
     return render(request, "journal/signup.html")
 
-def dashboard(request, user_name):
+def dashboard(request):
     if request.method == "POST":
         # Saving exercise in database
-        f = exercise(user_name = user_name, exercise_name = request.POST.get("exercise"), sets = request.POST.get("sets"), reps = request.POST.get("reps"))
+        # user_name = request.session.get('user_name')
+        f = exercise(user_name = request.session.get('user_name'), exercise_name = request.POST.get("exercise"), sets = request.POST.get("sets"), reps = request.POST.get("reps"))
         f.save()
         exercises = exercise.objects.all()
         exercises = list(exercises)
         new_list = []
         for i in exercises:
-            if str(i.user_name) == str(user_name):
+            if str(i.user_name) == str(request.session.get('user_name'),):
                 new_list.append(i) 
-        return render(request, "journal/dashboard.html", {"name" : user_name, "message" : new_list})
+        test_user_name = request.session.get('user_name')
+        return render(request, "journal/dashboard.html", {"name" : request.session.get('user_name'), "message" : new_list})
     exercises = exercise.objects.all()
     exercises = list(exercises)
     new_list = []
     for i in exercises:
-        if str(i.user_name) == str(user_name):
+        if str(i.user_name) == str(request.session.get('user_name')):
             new_list.append(i) 
-    return render(request, "journal/dashboard.html", {"name" : user_name, "message" : new_list})
+    test_user_name = request.session.get('user_name')
+    return render(request, "journal/dashboard.html", {"name" : request.session.get('user_name'), "message" : new_list})
 
 def delete_exercise(request):
     if request.method == "POST":
         user_name_1 = request.POST.get("user_name")
         exercise_name_1 = request.POST.get("exercise")
+        print(user_name_1)
+        print(exercise_name_1)
         exercises_to_delete = exercise.objects.get(user_name = user_name_1, exercise_name = exercise_name_1)
         exercises_to_delete.delete()
 

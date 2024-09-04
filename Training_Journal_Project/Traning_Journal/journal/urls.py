@@ -6,4 +6,4 @@ urlpatterns = [path("", views.index, name="index"),
                 path("login", views.login, name = "login"),
                 path("signup", views.signup, name = "signup"),
                 path("delete_exercise", views.delete_exercise, name="delete_exercise"),
-                path('<str:user_name>/', views.dashboard, name='dashboard'),]
+                path('dashboard', views.dashboard, name='dashboard'),]
